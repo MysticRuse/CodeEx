@@ -1,4 +1,4 @@
-package com.mr.interview.amazon;
+package com.mr.interview.datastructures;
 
 import java.util.Stack;
 

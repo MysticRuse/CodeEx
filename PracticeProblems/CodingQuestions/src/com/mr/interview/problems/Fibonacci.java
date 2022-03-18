@@ -1,4 +1,4 @@
-package com.mr.interview.amazon;
+package com.mr.interview.problems;
  
 public class Fibonacci {
 	// implement function that returns the nth value in a fibonacci series

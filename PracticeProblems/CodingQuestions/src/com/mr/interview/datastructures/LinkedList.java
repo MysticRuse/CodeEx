@@ -1,4 +1,4 @@
-package com.mr.interview.amazon;
+package com.mr.interview.datastructures;
 
 public class LinkedList {
 	private LinkedListNode mRoot;
