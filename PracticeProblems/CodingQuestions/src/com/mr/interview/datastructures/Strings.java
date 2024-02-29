@@ -69,7 +69,7 @@ public class Strings {
     // For example, if the input string is “wwwwaaadexxxxxx”, then the function should return “w4a3d1e1x6”
     //////////////////////////////////////////////////////////
     public static String getRunLengthEncodingFor(String str) {
-        if (str == null | str.length() == 0) {
+        if (str == null || str.length() == 0) {
             return null;
         }
 
@@ -450,6 +450,167 @@ public class Strings {
         return inputString;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Add Border
+    // Given a rectangular matrix of characters, add a border of asterisks(*) to it.
+    //Example For
+    //picture = ["abc",
+    //           "ded"]
+    //the output should be
+    //solution(picture) = ["*****",
+    //                      "*abc*",
+    //                      "*ded*",
+    //                      "*****"]
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    public static String[] borderStringMatrix(String[] picture) {
+
+        final int arrLength = picture.length;
+        final int numRows = arrLength + 2;
+        final String[] bordered = new String[numRows];
+
+        // Assumed each string is of same length as the String array is in a matrix format.
+        final int numColumns = picture[0].length() + 2;
+
+        // Intialize bordered;
+        for (int i = 0; i < numRows; i++) {
+            bordered[i] = "";
+        }
+
+        // Add *'s in first and last row.
+        for (int i = 0; i < numColumns; i++) {
+            bordered[0] = bordered[0] + "*";
+            bordered[numRows - 1] = bordered[numRows - 1] + "*";
+        }
+
+        int numStarsEachSide;
+        // Append and prepend the string array rows with *'s
+        for (int j = 0; j < arrLength; j++) {
+            int l = picture[j].length();
+            numStarsEachSide = (numColumns - l)/2;
+            if (numStarsEachSide > 0) {
+                for (int i = 0; i< numStarsEachSide; i++) {
+                    bordered[j+1] = bordered[j+1] + "*";
+                }
+            }
+            bordered[j+1] = bordered[j+1] + picture[j];
+            if (numStarsEachSide > 0) {
+                for (int i = 0; i< numStarsEachSide; i++) {
+                    bordered[j+1] = bordered[j+1] + "*";
+                }
+            }
+        }
+        return bordered;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Given a string, find out if its characters can be rearranged to form a palindrome.
+    //Example
+    //For inputString = "aabb", the output should be
+    //solution(inputString) = true.
+    //We can rearrange "aabb" to make "abba", which is a palindrome.
+    // "z" = true
+    // A set of characters can form a palindrome if at most one character occurs odd number of times and all characters occur even number of times.
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    static boolean palindromeRearranging(String inputString) {
+
+        // Create a count array and initialize all values as 0
+        final int[] countArr = new int[256];
+        Arrays.fill(countArr, 0);
+
+        // For each character in input strings, increment count in the corresponding count array
+        for (int i = 0; i < inputString.length(); i++) {
+            countArr[(int)(inputString.charAt(i))]++;
+        }
+
+        // Count odd occurring characters
+        int odd = 0;
+        for (int i = 0; i < 256; i++) {
+            if ((countArr[i] & 1) == 1)
+                odd++;
+
+            if (odd > 1)
+                return false;
+        }
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //An IP address is a numerical label assigned to each device (e.g., computer, printer) participating
+    // in a computer network that uses the Internet Protocol for communication. There are two versions
+    // of the Internet protocol, and thus two versions of addresses. One of them is the IPv4 address.
+    //Given a string, find out if it satisfies the IPv4 address naming rules.
+    //Example
+    //For inputString = "172.16.254.1", the output should be
+    //solution(inputString) = true;
+    //For inputString = "172.316.254.1", -> false
+    //316 is not in range [0, 255].
+    //For inputString = ".254.255.0", -> false
+    //There is no first number.
+    //216.5.9.00 -> false
+    //216..5.9.0-> false
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    static boolean isIpV4Address(final String inputString) {
+        if (inputString == null || inputString.isEmpty()) {
+            return false;
+        }
+
+        inputString.trim();
+
+        final char[] strArr = inputString.toCharArray();
+        final int n = strArr.length;
+        int i = 0;
+        StringBuffer token = new StringBuffer();
+        int numTokens = 0;
+        int numDots = 0;
+        while (i < n) {
+            if (strArr[i] != '.') {
+                token.append(inputString.charAt(i));
+            } else {
+                numDots++;
+                if (!(token.toString()).isEmpty()) {
+                    numTokens++;
+                    if (!validToken(token.toString())) {
+                        return false;
+                    }
+                }
+                // Done with this token. Create e new token.
+                token = new StringBuffer();
+            }
+            i++;
+        }
+
+        // Process the last token.
+        if (token != null) {
+            numTokens++;
+            if (!validToken(token.toString())) {
+                return false;
+            }
+        }
+
+        return numTokens == 4 && numDots == 3;
+    }
+
+    private static boolean validToken(final String token) {
+        // Check whether string has a leading zero but is not "0"
+        if (token.startsWith("0")) {
+            return token.length() == 1;
+        }
+        if (token.equals("00") || token.equals("000")) {
+            return false;
+        }
+        try {
+            int intToken = Integer.parseInt(token.toString());
+            System.out.println("strToken: " + token + ", intToken = " + intToken);
+            if (intToken < 0 || intToken > 255) {
+                return false;
+            }
+        } catch (final NumberFormatException ex) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     ///////////////////////////////////////////////////////
     // main
@@ -479,5 +640,27 @@ public class Strings {
 
         System.out.println("reverseInParenthesis((bar): " + reverseInParenthesis("(bar)"));
         System.out.println("reverseInParenthesis(foo(bar(baz))foo): " + reverseInParenthesis("foo(bar(baz))foo"));
+
+        final String[] toBorder = {"abc", "def", "ghi"};
+        System.out.println("Input: ");
+        printBordered(toBorder);
+        final String[] bordered = borderStringMatrix(toBorder);
+        System.out.println("Output");
+        printBordered(bordered);
+        System.out.println("Border string matrix: " + toBorder);
+
+        System.out.println("Palindrome rearranged? (abba): " + palindromeRearranging("abba"));
+        System.out.println("Palindrome rearranged? (a): " + palindromeRearranging("a"));
+        System.out.println("Palindrome rearranged? (abcd): " + palindromeRearranging("abcd"));
+
+        System.out.println("isIpV4Address(127.11.16.1): " + isIpV4Address("127.11.16.1"));
+        System.out.println("isIpV4Address(127.11.16.00): " + isIpV4Address("127.11.16.00"));
+        System.out.println("isIpV4Address(127.11.16..1): " + isIpV4Address("127.11.16.1"));
+    }
+
+    private static void printBordered(final String[] bordered) {
+        for (int i = 0; i < bordered.length; i++) {
+            System.out.println("    " + bordered[i]);
+        }
     }
 }
