@@ -35,7 +35,7 @@ public class MinStack {
         return stack.peek();
     }
 
-    public static final void main(final String[] args) {
+    public static void main(final String[] args) {
         MinStack minStack = new MinStack();
         minStack.push(-2);
         minStack.push(0);

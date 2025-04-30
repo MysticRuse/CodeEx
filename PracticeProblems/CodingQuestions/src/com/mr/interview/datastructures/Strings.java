@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 
-import sun.misc.Queue;
+//import sun.misc.Queue;
 
 public class Strings {
 
@@ -69,7 +69,7 @@ public class Strings {
     // For example, if the input string is “wwwwaaadexxxxxx”, then the function should return “w4a3d1e1x6”
     //////////////////////////////////////////////////////////
     public static String getRunLengthEncodingFor(String str) {
-        if (str == null || str.length() == 0) {
+        if (str == null || str.isEmpty()) {
             return null;
         }
 
@@ -381,33 +381,33 @@ public class Strings {
     //Return inputString, with all the characters that were in parentheses reversed.
     ////////////////////////////////////////////////////////
     private static String reverseInParenthesisStackQueue(String inputString) {
-        if (inputString == null || inputString.length() == 0) {
+        if (inputString == null || inputString.isEmpty()) {
             return inputString;
         }
 
-        final Stack<Character> st = new Stack();
+        final Stack<Character> st = new Stack<>();
         final char[] inputArr = inputString.toCharArray();
         for (int i = 0; i < inputString.length(); i++) {
-            if (inputArr[i] == ')') {
-                // Found a closing bracket. Now add all before it upto opening bracket in Queue.
-                final Queue<Character> q = new Queue<>();
-
-                while (st.peek() != '(') {
-                    q.enqueue(st.pop());
-                }
-                // pop the '(' too
-                st.pop();
-
-                while (!q.isEmpty()) {
-                    try {
-                        st.push(q.dequeue());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else {
-                st.push(inputArr[i]);
-            }
+//            if (inputArr[i] == ')') {
+//                // Found a closing bracket. Now add all before it upto opening bracket in Queue.
+//                final Queue<Character> q = new Queue<>();
+//
+//                while (st.peek() != '(') {
+//                    q.enqueue(st.pop());
+//                }
+//                // pop the '(' too
+//                st.pop();
+//
+//                while (!q.isEmpty()) {
+//                    try {
+//                        st.push(q.dequeue());
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            } else {
+//                st.push(inputArr[i]);
+//            }
         }
 
         final int stackSize = st.size();
@@ -635,8 +635,8 @@ public class Strings {
         System.out.println("Run length encoding of abbberrrrc = " + getRunLengthEncodingFor("abbberrrrc"));
         System.out.println("Run length encoding of a = " + getRunLengthEncodingFor("a"));
 
-        System.out.println("---reverseInParenthesisSQ((bar): " + reverseInParenthesisStackQueue("(bar)"));
-        System.out.println("---reverseInParenthesisSQ(foo(bar(baz))foo): " + reverseInParenthesisStackQueue("foo(bar(baz))foo"));
+//        System.out.println("---reverseInParenthesisSQ((bar): " + reverseInParenthesisStackQueue("(bar)"));
+//        System.out.println("---reverseInParenthesisSQ(foo(bar(baz))foo): " + reverseInParenthesisStackQueue("foo(bar(baz))foo"));
 
         System.out.println("reverseInParenthesis((bar): " + reverseInParenthesis("(bar)"));
         System.out.println("reverseInParenthesis(foo(bar(baz))foo): " + reverseInParenthesis("foo(bar(baz))foo"));

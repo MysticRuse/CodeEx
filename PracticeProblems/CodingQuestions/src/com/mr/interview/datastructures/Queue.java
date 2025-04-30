@@ -14,7 +14,7 @@ public class Queue {
 		mStackQueue = new Stack<QueueElement>();
 	}
 
-	public void enque(QueueElement data) {
+	public void enqueue(QueueElement data) {
 		if ( data == null) {
 			return;
 		}
@@ -56,19 +56,18 @@ public class Queue {
 		if (mStackQueue.isEmpty()) {
 			System.out.print("null");
 		} else {
-		for (int i=0; i < mStackQueue.size(); i++) {
-			QueueElement elem = mStackQueue.get(i);
-			if (elem != null) {
-				System.out.print(elem.get() + " ");
-			} else {
-				System.out.print("null");
-			}
-		}
+            for (QueueElement elem : mStackQueue) {
+                if (elem != null) {
+                    System.out.print(elem.get() + " ");
+                } else {
+                    System.out.print("null");
+                }
+            }
 		}
 		System.out.print("\n");
 	}
 
-	public class QueueElement {
+	public static class QueueElement {
 		private int mData;
 
 		public QueueElement(int data) {
@@ -87,10 +86,10 @@ public class Queue {
 	public static void main(String... args) {
 		Queue myQueue = new Queue();
 		myQueue.print();
-		myQueue.enque(myQueue.new QueueElement(1));
-		myQueue.enque(myQueue.new QueueElement(2));
-		myQueue.enque(myQueue.new QueueElement(3));
-		myQueue.enque(myQueue.new QueueElement(4));
+		myQueue.enqueue(new QueueElement(1));
+		myQueue.enqueue(new QueueElement(2));
+		myQueue.enqueue(new QueueElement(3));
+		myQueue.enqueue(new QueueElement(4));
 		myQueue.print();
 		myQueue.deque();
 		myQueue.print();
