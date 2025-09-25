@@ -48,11 +48,53 @@ public class CountOccurrencesSortedArr {
             } else if (arr[mid] < k) {
                 l = mid + 1; // Search right
             } else {
-                r = mid-1; // Search left
+                r = mid - 1; // Search left
             }
         }
         System.out.println("Found last occurrence: " + foundIndex);
         return foundIndex;
+    }
+
+    private boolean binarySearchIterative(int[] sortedArr, int target) {
+        int l =0;
+        int r = sortedArr.length - 1;
+
+        while (l <= r) {
+            int mid = l + (r - l)/2;
+            if (target == sortedArr[mid]) {
+                return true;
+            } else if (target < sortedArr[mid]) {
+                // means it is in the left of mid. pull in r to mid
+                r = mid - 1;
+            } else {
+                // target > arr[mid]. push l to mid+1
+                l = mid +1;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean binarySearchRecursive(int[] arr, int target) {
+        int l = 0; int r = arr.length -1;
+
+        return doBinarySearchRecurse(arr, target, l, r);
+    }
+
+    private boolean doBinarySearchRecurse(int[] arr, int target, int l, int r) {
+        if (l > r) {
+            return false;
+        }
+        int mid = l + (r-l)/2;
+
+        if (arr[mid] == target) {
+            return true;
+        }
+        if (target < arr[mid]) {
+            return doBinarySearchRecurse(arr, target, l, mid-1);
+        }
+
+        return doBinarySearchRecurse(arr, target, mid+1, r);
     }
 
     public static final void main(String[] args) {
